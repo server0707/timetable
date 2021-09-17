@@ -3,51 +3,71 @@
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
-?>
+
+use yii\grid\GridView; ?>
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <h1 class="display-4">Dars jadvali</h1>
     </div>
 
     <div class="body-content">
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'pager' => [
+                'class' => \yii\bootstrap4\LinkPager::className(),
+            ],
+            'columns' => [
+                [
+                    'class' => 'yii\grid\SerialColumn',
+                    'options' => [
+                        'style' => 'width: 40px'
+                    ]
+                ],
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+//            'id',
+                'date',
+                [
+                    'attribute' => 'teacher',
+                    'value' => function ($model) {
+                        return substr($model->teacher->firstname, 0, 1) . '. ' . substr($model->teacher->fathername, 0, 1) . '. ' . $model->teacher->lastname;
+                    }
+                ],
+                [
+                    'attribute' => 'group',
+                    'value' => function ($model) {
+                        return $model->group->name;
+                    }
+                ],
+                [
+                    'attribute' => 'room',
+                    'value' => function ($model) {
+                        return $model->room->number . ' (' . $model->room->name . ')';
+                    }
+                ],
+                [
+                    'attribute' => 'subject',
+                    'value' => function ($model) {
+                        return $model->subject->name;
+                    }
+                ],
+                [
+                    'attribute' => 'lesson_time',
+                    'value' => function ($model) {
+                        return $model->lessonTime->name;
+                    }
+                ],
 
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
+                /*[
+                    'class' => 'yii\grid\ActionColumn',
+                    'options' => [
+                        'style' => 'width: 70px'
+                    ]
+                ],*/
+            ],
+        ]); ?>
 
     </div>
 </div>
